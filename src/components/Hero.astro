@@ -1,0 +1,69 @@
+---
+import WaitlistForm from './WaitlistForm.astro';
+---
+<section id="top" class="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-brand-50/60 via-white to-white">
+  <!-- Decorative background -->
+  <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-radial from-brand-200/40 via-transparent to-transparent blur-3xl"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Left: copy + waitlist -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-semibold tracking-wide uppercase mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
+          Coming soon · Pre-launch
+        </div>
+
+        <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tightest text-slate-900 leading-[1.05]">
+          School technology audits,<br />
+          <span class="text-brand-700">simplified.</span>
+        </h1>
+
+        <p class="mt-6 text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl">
+          EDU Audit+ turns a clipboard, a spreadsheet, and a long day into a few taps. Scan barcodes and serial numbers, track every device across every site, and export audit-ready reports — all offline, all on-device.
+        </p>
+
+        <div class="mt-10">
+          <WaitlistForm tone="light" />
+        </div>
+
+        <div class="mt-8 flex items-center gap-5 text-sm text-slate-500">
+          <a href="#how-it-works" class="font-semibold text-brand-700 hover:underline">See how it works ↓</a>
+          <span class="hidden sm:inline">Built by the team behind EDU Mileage+</span>
+        </div>
+      </div>
+
+      <!-- Right: app icon + floating audit cards (no screenshots yet — pre-launch) -->
+      <div class="relative hidden md:block">
+        <div class="relative mx-auto max-w-[360px] aspect-square">
+          <div class="absolute inset-8 bg-gradient-to-br from-brand-200/50 to-transparent blur-2xl rounded-full" aria-hidden="true"></div>
+          <img
+            src="/icon.png"
+            alt="EDU Audit+ app icon"
+            width="360"
+            height="360"
+            class="relative w-full h-full object-contain drop-shadow-2xl rounded-[28%]"
+          />
+        </div>
+
+        <!-- Floating glass cards -->
+        <div class="absolute -left-4 top-10 bg-white/90 backdrop-blur rounded-2xl shadow-lg ring-1 ring-slate-900/5 px-4 py-3 max-w-[210px]">
+          <div class="flex items-center gap-2 text-xs text-slate-500 font-medium mb-1">
+            <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+            Serial scanned
+          </div>
+          <div class="text-sm font-semibold text-slate-900">MacBook Air M3</div>
+          <div class="text-xs text-slate-600">Asset C0FY3 · Good condition</div>
+        </div>
+
+        <div class="absolute -right-4 bottom-12 bg-white/90 backdrop-blur rounded-2xl shadow-lg ring-1 ring-slate-900/5 px-4 py-3 max-w-[210px]">
+          <div class="text-xs text-slate-500 font-medium mb-1">Lincoln Elementary</div>
+          <div class="text-sm font-semibold text-slate-900">248 devices audited</div>
+          <div class="text-xs text-slate-600">Ready to export · AssetTiger CSV</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

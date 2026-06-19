@@ -1,0 +1,44 @@
+---
+const points = [
+  {
+    title: 'Works completely offline',
+    body: 'No Wi-Fi, no cell signal, no district backend required. Audit a basement server closet or a portable classroom — the data is on the device.',
+  },
+  {
+    title: 'Data stays on-device',
+    body: 'No third-party servers collecting your inventory. You decide when and where to export it.',
+  },
+  {
+    title: 'Role-based access control',
+    body: 'PIN-based login with Super Admin, Admin, Auditor, and Read-Only roles. Auditors are scoped to only their assigned sites.',
+  },
+  {
+    title: 'Session security',
+    body: 'Configurable inactivity timeout and re-authentication on relaunch — aligned with NIST SP 800-63B and built with FERPA in mind.',
+  },
+];
+---
+<section id="security" class="py-20 md:py-28 bg-slate-900 text-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-2xl mb-14">
+      <p class="text-sm font-semibold tracking-widest uppercase text-brand-300 mb-3">
+        Built for district IT
+      </p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight">
+        Security that survives a procurement review.
+      </h2>
+      <p class="mt-5 text-lg text-slate-300 leading-relaxed">
+        EDU Audit+ is designed for the realities of K-12 technology: spotty networks, sensitive equipment, and rules about who can see what.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      {points.map((p) => (
+        <div class="rounded-2xl p-6 bg-white/5 ring-1 ring-white/10">
+          <h3 class="font-display font-bold text-lg mb-2">{p.title}</h3>
+          <p class="text-slate-300 leading-relaxed text-sm">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

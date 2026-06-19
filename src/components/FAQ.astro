@@ -1,0 +1,79 @@
+---
+const faqs = [
+  {
+    q: "What is EDU Audit+?",
+    a: "EDU Audit+ is an iPhone and iPad app that helps K-12 school districts audit and manage their technology inventory. You scan barcodes and serial numbers, record device details and condition across every site, and export audit-ready reports — without paper forms or a laptop full of spreadsheets.",
+  },
+  {
+    q: "When will it be available?",
+    a: "EDU Audit+ is in active development and preparing for its App Store launch. Join the waitlist and we'll email you the moment it's available — you'll be among the first to try it.",
+  },
+  {
+    q: "What will it cost?",
+    a: "Pricing isn't finalized yet. Waitlist members will be the first to hear the details — and any early-access or launch offers.",
+  },
+  {
+    q: "What devices does it run on?",
+    a: "EDU Audit+ is built for iPhone and iPad (iOS 16 and later). Scanning uses the device camera, so any reasonably recent iPhone or iPad works in the field.",
+  },
+  {
+    q: "Does it need Wi-Fi or a server to set up?",
+    a: "No. EDU Audit+ works completely offline and runs entirely on the device — there's no district backend to stand up and no network required to audit. You export your data when you're ready.",
+  },
+  {
+    q: "How is our data kept secure?",
+    a: "Your inventory stays on the device, not on a third-party server. Access is controlled with PIN-based logins and roles (Super Admin, Admin, Auditor, Read-Only), with configurable session timeouts. The app is built with FERPA in mind and aligned with NIST SP 800-63B for authentication.",
+  },
+  {
+    q: "Can several staff use it with different access levels?",
+    a: "Yes. A Super Admin manages user profiles and assigns Auditors to specific sites. Admins can audit, manage lists, and export; Auditors enter devices at their assigned sites; Read-Only users can view across all data.",
+  },
+  {
+    q: "How do I get early access?",
+    a: "Add your email to the waitlist on this page. We'll reach out with launch news and any opportunities to try it early in your district.",
+  },
+];
+---
+<section id="faq" class="py-20 md:py-28 bg-slate-50">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <p class="text-sm font-semibold tracking-widest uppercase text-brand-700 mb-3">
+        Frequently asked
+      </p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+        Questions answered.
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      {faqs.map((item) => (
+        <details class="group bg-white rounded-2xl ring-1 ring-slate-200 hover:ring-brand-300 transition overflow-hidden">
+          <summary class="cursor-pointer px-6 py-5 font-display font-semibold text-slate-900 flex items-center justify-between gap-4 list-none [&::-webkit-details-marker]:hidden">
+            <span>{item.q}</span>
+            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition flex-shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed">
+            {item.a}
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <p class="mt-10 text-center text-sm text-slate-500">
+      More questions? Email <a href="mailto:hello@eduplusapps.com" class="text-brand-700 font-semibold hover:underline">hello@eduplusapps.com</a>.
+    </p>
+  </div>
+
+  <!-- JSON-LD: FAQPage schema for rich results -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    })),
+  })} />
+</section>

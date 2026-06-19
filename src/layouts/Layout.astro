@@ -1,0 +1,115 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'EDU Audit+ — Technology audits built for K-12 school districts',
+  description = 'EDU Audit+ is the simplest way to audit and manage K-12 technology inventory. Scan barcodes and serial numbers, track devices across every site, and export audit-ready reports — offline, on-device, role-based. Join the pre-launch waitlist.',
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+// ── Pre-launch analytics placeholders ──────────────────────────────────────
+// Swap these for the real EDU Audit+ IDs before deploying. The page builds and
+// previews fine with placeholders (they simply no-op). See README "Pre-launch tasks".
+const GA4_ID = 'G-XXXXXXXXXX';            // TODO: new "EDU Audit+" GA4 property
+const CLARITY_ID = 'CLARITY_PROJECT_ID';  // TODO: new Clarity project
+const CF_BEACON_TOKEN = 'CF_BEACON_TOKEN'; // TODO: eduaudit RUM beacon token (RUM also auto-injected at edge)
+const analyticsLive = !GA4_ID.includes('X') && CLARITY_ID !== 'CLARITY_PROJECT_ID';
+---
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1d3b66" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:site_name" content="EDU Audit+" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    {analyticsLive && (
+      <>
+        <!-- Google Analytics 4 -->
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+        <script define:vars={{ GA4_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', GA4_ID);
+        </script>
+
+        <!-- Cloudflare Web Analytics -->
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={`{"token": "${CF_BEACON_TOKEN}"}`}></script>
+
+        <!-- Microsoft Clarity -->
+        <script define:vars={{ CLARITY_ID }}>
+          (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script",CLARITY_ID);
+        </script>
+      </>
+    )}
+
+    <!-- GA4 event tracking — bundled by Astro -->
+    <script>
+      document.querySelectorAll<HTMLElement>('[data-ga-label]').forEach(el => {
+        el.addEventListener('click', () => {
+          if (typeof (window as any).gtag === 'function') {
+            (window as any).gtag('event', 'cta_click', {
+              event_category: 'engagement',
+              event_label: el.dataset.gaLabel,
+            });
+          }
+        });
+      });
+    </script>
+
+    <!-- JSON-LD: Organization + SoftwareApplication (pre-release) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "EDU Audit+",
+      "alternateName": "Audit+",
+      "operatingSystem": "iOS 16+",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Asset Management",
+      "description": description,
+      "url": "https://eduaudit.app",
+      "image": new URL('/icon.png', Astro.site).toString(),
+      "keywords": "school technology audit, K-12 IT, device inventory, asset management, barcode scanner, serial number OCR, AssetTiger, FERPA, school district, technology coordinator",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "K-12 school district technology staff"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "EDU Plus Apps",
+        "url": "https://eduplusapps.com",
+        "logo": new URL('/icon.png', Astro.site).toString(),
+        "email": "support@eduplusapps.com"
+      }
+    })} />
+  </head>
+  <body class="bg-white text-slate-900 font-sans selection:bg-brand-200 selection:text-brand-900">
+    <slot />
+  </body>
+</html>

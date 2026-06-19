@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "eduaudit-app-site",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-06-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "WAITLIST",
+      // TODO(pre-launch): create the KV namespace and paste its id here.
+      //   npx wrangler kv namespace create eduaudit-waitlist
+      "id": "REPLACE_WITH_EDUAUDIT_WAITLIST_KV_ID"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

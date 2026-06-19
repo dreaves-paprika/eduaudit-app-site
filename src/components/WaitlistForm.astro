@@ -1,0 +1,67 @@
+---
+interface Props {
+  tone?: 'light' | 'dark';
+}
+const { tone = 'light' } = Astro.props;
+const dark = tone === 'dark';
+
+const inputClass = dark
+  ? 'flex-1 min-w-0 rounded-full px-5 py-3.5 text-base bg-white text-slate-900 placeholder-slate-400 ring-1 ring-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white'
+  : 'flex-1 min-w-0 rounded-full px-5 py-3.5 text-base bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500';
+
+const buttonClass = dark
+  ? 'inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-brand-900 font-semibold px-7 py-3.5 rounded-full text-base transition shadow-lg focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-900'
+  : 'inline-flex items-center justify-center gap-2 bg-brand-700 hover:bg-brand-800 text-white font-semibold px-7 py-3.5 rounded-full text-base transition shadow-lg shadow-brand-900/10 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2';
+
+const noteClass = dark ? 'mt-3 text-xs text-brand-200' : 'mt-3 text-xs text-slate-500';
+const statusClass = dark ? 'mt-3 text-sm font-medium min-h-[1.25rem] text-brand-50' : 'mt-3 text-sm font-medium min-h-[1.25rem] text-slate-700';
+---
+<form method="POST" action="/api/notify" class="w-full max-w-md" data-waitlist-form>
+  <!-- Honeypot — real users never see or fill this -->
+  <div aria-hidden="true" class="absolute left-[-9999px] w-px h-px overflow-hidden">
+    <label>Leave this field empty
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3">
+    <label class="sr-only">
+      Email address
+      <input
+        type="email"
+        name="email"
+        required
+        autocomplete="email"
+        placeholder="you@district.org"
+        class={inputClass}
+      />
+    </label>
+    <button type="submit" data-ga-label="waitlist_submit" class={buttonClass}>
+      Join the waitlist
+      <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+    </button>
+  </div>
+
+  <p data-waitlist-status role="status" aria-live="polite" class={statusClass}></p>
+  <p class={noteClass}>No spam. One email when EDU Audit+ launches. Unsubscribe anytime.</p>
+</form>
+
+<script>
+  // The Worker redirects back to /?notified=ok|error after a submission.
+  // Reflect that on every waitlist form on the page, then tidy the URL.
+  const params = new URLSearchParams(window.location.search);
+  const state = params.get('notified');
+  if (state) {
+    document.querySelectorAll<HTMLElement>('[data-waitlist-status]').forEach((el) => {
+      el.textContent =
+        state === 'ok'
+          ? "✓ You're on the list — we'll email you the moment EDU Audit+ launches."
+          : '⚠ Something went wrong. Please check your email address and try again.';
+    });
+    if (history.replaceState) {
+      params.delete('notified');
+      const q = params.toString();
+      history.replaceState(null, '', window.location.pathname + (q ? '?' + q : '') + window.location.hash);
+    }
+  }
+</script>

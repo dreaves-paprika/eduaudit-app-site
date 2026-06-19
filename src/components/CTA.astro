@@ -1,0 +1,23 @@
+---
+import WaitlistForm from './WaitlistForm.astro';
+---
+<section id="waitlist" class="py-20 md:py-28">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="bg-gradient-to-br from-brand-700 to-brand-900 rounded-3xl p-10 md:p-14 text-center shadow-2xl shadow-brand-900/20">
+      <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+        Be first in line for EDU Audit+.
+      </h2>
+      <p class="mt-5 text-lg text-brand-100 max-w-xl mx-auto">
+        We're building the simplest way to audit and manage K-12 technology. Join the waitlist and we'll email you the moment it launches.
+      </p>
+
+      <div class="mt-8 flex justify-center">
+        <WaitlistForm tone="dark" />
+      </div>
+
+      <p class="mt-6 text-sm text-brand-200">
+        Built for K-12 districts · Offline &amp; on-device · From EDU Plus Apps
+      </p>
+    </div>
+  </div>
+</section>

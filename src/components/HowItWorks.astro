@@ -1,0 +1,47 @@
+---
+const steps = [
+  {
+    n: '1',
+    title: 'Scan',
+    body: 'Point your phone at the asset tag or serial. Barcode and OCR do the typing. Pickers for manufacturer, model, condition, and assigned user make the rest a few taps — with "Save & Add Another" for a whole cart in a row.',
+  },
+  {
+    n: '2',
+    title: 'Track',
+    body: 'Every device is filed by site and sub-location, with condition, assignment, and a full audit trail (who audited it, when, and any edits). Duplicate serials and tags are flagged before they become a mess.',
+  },
+  {
+    n: '3',
+    title: 'Export',
+    body: 'When the audit is done, export CSV in Standard or AssetTiger format, or print a branded report — filtered by site or date range. Hand it to your asset system, your director, or your auditor.',
+  },
+];
+---
+<section id="how-it-works" class="py-20 md:py-28">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-2xl mx-auto text-center mb-16">
+      <p class="text-sm font-semibold tracking-widest uppercase text-brand-700 mb-3">
+        How it works
+      </p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+        Scan. Track. Export.
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 md:gap-6 lg:gap-10">
+      {steps.map((step) => (
+        <div class="relative">
+          <div aria-hidden="true" class="flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-700 text-white font-display font-bold text-2xl mb-5 shadow-lg shadow-brand-900/15">
+            {step.n}
+          </div>
+          <h3 class="font-display text-xl md:text-2xl font-bold tracking-tight text-slate-900 mb-3">
+            <span class="sr-only">Step {step.n}: </span>{step.title}
+          </h3>
+          <p class="text-slate-600 leading-relaxed">
+            {step.body}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
