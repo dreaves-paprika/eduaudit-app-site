@@ -1,8 +1,13 @@
 # eduaudit.app — pre-launch teaser site
 
 Pre-launch marketing / **waitlist** site for **EDU Audit+**, the K-12 technology
-audit iOS app. Built with Astro + Tailwind, deployed to Cloudflare Workers
-(Static Assets) on push to `main`. Same architecture as the edumileage.app site.
+audit iOS app. Built with Astro + Tailwind on Cloudflare Workers (Static Assets),
+same architecture as the edumileage.app site.
+
+> **🟢 Status (2026-06-20): LIVE at https://eduaudit.app.** Deployed via **manual
+> `npm run build && npx wrangler deploy`** — this Worker is **not** Git-connected to
+> Cloudflare Workers Builds yet, so `git push` does NOT deploy it. See `SITE_PLAN.md`
+> for full context and remaining tasks.
 
 ## Local development
 
@@ -23,18 +28,20 @@ single job is to **start collecting interest + analytics** ahead of launch:
 
 No App Store download, screenshots, demo video, or pricing — those land at launch.
 
-## ⚠️ Pre-launch tasks (placeholders to fill before deploy)
+## ⚠️ Remaining placeholders / pending setup
 
-These are intentionally left as obvious placeholders; the site builds and previews
-fine without them, but data collection / waitlist won't work until they're set:
+The site is live and already collects (waitlist → KV + Cloudflare RUM). These remain;
+the site runs fine without them — analytics stay guarded off until real IDs are filled:
 
 | Placeholder | Where | Replace with |
 |---|---|---|
 | `G-XXXXXXXXXX` | `src/layouts/Layout.astro` | real GA4 measurement ID (new "EDU Audit+" property) |
 | `CLARITY_PROJECT_ID` | `src/layouts/Layout.astro` | real Microsoft Clarity project id |
 | `CF_BEACON_TOKEN` | `src/layouts/Layout.astro` | eduaudit Cloudflare Web Analytics beacon token (RUM is also auto-injected at the edge today) |
-| `REPLACE_WITH_EDUAUDIT_WAITLIST_KV_ID` | `wrangler.jsonc` | `npx wrangler kv namespace create eduaudit-waitlist` |
-| `LOOPS_API_KEY` | Worker secret | `npx wrangler secret put LOOPS_API_KEY` |
+| `LOOPS_API_KEY` | Worker secret | `npx wrangler secret put LOOPS_API_KEY` (welcome email) |
+
+✅ **Done:** KV namespace `eduaudit-waitlist` created (`7d6470fa4ded48eb8e798540d54e9a17`)
+and bound in `wrangler.jsonc`.
 
 Also before public launch: flip the CSP from Report-Only to enforced + hash-pinned
 (see `_headers` and `src/worker.ts`).
@@ -73,6 +80,13 @@ origin/referer check, per-IP rate limit, honeypot, 2 KB body cap, security heade
 
 ## Deployment
 
-Connected (to be set up) to Cloudflare Workers via Git integration on
-`dreaves-paprika/eduaudit-app-site`. Build command `npm run build`, output `dist`.
-Serves at https://eduaudit.app via custom domain binding on the Worker.
+**Currently manual** (this Worker is not Git-connected to Cloudflare Workers Builds):
+
+```bash
+npm run build && npx wrangler deploy   # token auth via CLOUDFLARE_API_TOKEN
+```
+
+Serves at https://eduaudit.app + https://www.eduaudit.app via the custom domain binding
+on the `eduaudit-app-site` Worker. **Recommended:** connect Git integration in the
+Cloudflare dashboard (deploy command `npm run build && npx wrangler deploy`) so it
+deploys on `git push` like edumileage/eduplusapps.
