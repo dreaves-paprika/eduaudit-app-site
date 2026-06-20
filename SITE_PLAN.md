@@ -3,7 +3,7 @@
 > **Purpose of this file:** a complete, self-contained record of what this site is,
 > why it exists, how it's built, what's done, and what's left — so a brand-new
 > session (or a new collaborator) can pick this up with full context. Last updated
-> **2026-06-18**.
+> **2026-06-20** (site went live).
 
 ---
 
@@ -16,9 +16,36 @@ is to **start collecting information ahead of launch**: a waitlist email capture
 analytics (GA4, Microsoft Clarity, Cloudflare Web Analytics).
 
 It was built to deliberately **mirror the edumileage.app site's architecture**
-(Astro + Tailwind + Cloudflare Worker, deploy-on-push). It is **built and verified
-locally but NOT yet deployed** — deployment waits on owner review + the provisioning
-tasks in §10.
+(Astro + Tailwind + Cloudflare Worker). **As of 2026-06-20 it is LIVE at eduaudit.app
+and collecting** — see the status update immediately below.
+
+---
+
+## 🟢 STATUS UPDATE — 2026-06-20: SITE IS LIVE
+
+- ✅ Live at https://eduaudit.app and https://www.eduaudit.app (verified).
+- ✅ Waitlist works end-to-end: form → `/api/notify` Worker → **KV `eduaudit-waitlist`**
+  (id `7d6470fa4ded48eb8e798540d54e9a17`). Verified with a test submit, then cleaned up.
+- ✅ Cloudflare RUM auto-collects (it already did on the stub).
+- ✅ Copy future-proofed for planned Phase-2 cloud sync (offline kept; absolute
+  "no servers / data stays on device" claims softened to "you control your data").
+
+**Deploy reality — correction to §4's assumption:** the `eduaudit-app-site` Worker is
+**NOT connected to Cloudflare Workers Builds / git auto-deploy** (unlike edumileage +
+eduplusapps). A `git push` to `main` does **nothing** for it. It was — and still is —
+deployed by a **manual `wrangler deploy`** (token auth). The code is on `main`, but to
+deploy updates you currently run `npm run build && npx wrangler deploy`. *(Recommended:
+connect Git integration in the Cloudflare dashboard so it matches the other two sites.)*
+
+**Still pending (do NOT block the live site, but finish for full function):**
+1. **Loops welcome email** — set `LOOPS_API_KEY` secret (`npx wrangler secret put LOOPS_API_KEY`).
+   Until then signups save to KV but no email is sent.
+2. **GA4 + Clarity** — create the property/project, paste IDs into `Layout.astro`, redeploy.
+   (Analytics are guarded off while placeholders remain — nothing breaks meanwhile.)
+3. **Git integration** — connect the repo in Cloudflare Workers Builds (deploy command
+   `npm run build && npx wrangler deploy`) for push-to-deploy.
+4. **Harden CSP** — flip Report-Only → enforced + hash-pinned once analytics IDs are final.
+5. **OG image / screenshots** — designed OG; app screenshots when available.
 
 ---
 
