@@ -25,17 +25,15 @@ const statusClass = dark ? 'mt-3 text-sm font-medium min-h-[1.25rem] text-brand-
   </div>
 
   <div class="flex flex-col sm:flex-row gap-3">
-    <label class="sr-only">
-      Email address
-      <input
-        type="email"
-        name="email"
-        required
-        autocomplete="email"
-        placeholder="you@district.org"
-        class={inputClass}
-      />
-    </label>
+    <input
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      aria-label="Email address"
+      placeholder="you@district.org"
+      class={inputClass}
+    />
     <button type="submit" data-ga-label="waitlist_submit" class={buttonClass}>
       Join the waitlist
       <svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
