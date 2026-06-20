@@ -12,9 +12,8 @@
   "kv_namespaces": [
     {
       "binding": "WAITLIST",
-      // TODO(pre-launch): create the KV namespace and paste its id here.
-      //   npx wrangler kv namespace create eduaudit-waitlist
-      "id": "REPLACE_WITH_EDUAUDIT_WAITLIST_KV_ID"
+      // Created 2026-06-20 via Cloudflare API (namespace "eduaudit-waitlist").
+      "id": "7d6470fa4ded48eb8e798540d54e9a17"
     }
   ],
   "observability": {
